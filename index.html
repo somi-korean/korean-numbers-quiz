@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korean Numbers Quiz — Somi Korean</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'Pretendard',sans-serif; background:#F8F7F5; min-height:100vh;
+    display:flex; justify-content:center; }
+  .app { width:100%; max-width:480px; min-height:100vh; padding:24px 20px 40px;
+    display:flex; flex-direction:column; }
+
+  .brand { text-align:center; font-weight:700; color:#3FA79E; font-size:15px; margin-bottom:8px; }
+
+  /* 시작 화면 */
+  .screen { flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center; }
+  .title { font-weight:800; font-size:34px; color:#1e1e1e; line-height:1.25; }
+  .subtitle { color:#555; font-size:17px; line-height:1.5; margin-top:14px; }
+  .teams { display:flex; gap:12px; margin:28px 0; }
+  .team-box { flex:1; border-radius:16px; padding:18px 12px; text-align:center; }
+  .team-box.t1 { background:#FDEEE9; }
+  .team-box.t2 { background:#E3F3EF; }
+  .team-box .tn { font-weight:800; font-size:22px; }
+  .t1 .tn { color:#E05C3F; } .t2 .tn { color:#1E9E6E; }
+  .team-box .tu { font-size:14px; color:#555; margin-top:6px; line-height:1.4; }
+  .btn { display:block; width:100%; background:#8FD9D3; border:none; border-radius:50px;
+    font-family:'Pretendard',sans-serif; font-weight:800; font-size:20px; color:#1e1e1e;
+    padding:18px; cursor:pointer; margin-top:12px; }
+  .btn:active { transform:scale(.98); }
+
+  /* 퀴즈 화면 */
+  .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .round-tag { background:#D8EFEC; font-weight:800; font-size:14px; padding:6px 14px; border-radius:50px; color:#1e1e1e; }
+  .score-tag { font-weight:800; font-size:15px; color:#3FA79E; }
+  .bar { height:8px; background:#e8e6e2; border-radius:4px; overflow:hidden; margin-bottom:24px; }
+  .bar i { display:block; height:100%; background:#8FD9D3; width:0%; transition:width .3s; }
+
+  .q-situation { text-align:center; font-size:17px; color:#777; font-weight:600; }
+  .q-main { text-align:center; font-weight:800; font-size:44px; color:#1e1e1e; margin:16px 0 6px; line-height:1.2; }
+  .q-sub { text-align:center; font-size:16px; color:#999; margin-bottom:26px; }
+
+  .choices { display:flex; flex-direction:column; gap:12px; }
+  .choices.row { flex-direction:row; }
+  .choice { flex:1; border:none; border-radius:16px; background:#fff; padding:20px 16px;
+    font-family:'Pretendard',sans-serif; font-weight:800; font-size:22px; color:#1e1e1e;
+    cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.06); line-height:1.3; }
+  .choice small { display:block; font-weight:600; font-size:13px; color:#888; margin-top:4px; }
+  .choice.team1 { background:#FDEEE9; color:#E05C3F; }
+  .choice.team2 { background:#E3F3EF; color:#1E9E6E; }
+  .choice.correct { background:#8FD9D3 !important; color:#1e1e1e !important; }
+  .choice.wrong { background:#F0645C !important; color:#fff !important; }
+  .choice:disabled { cursor:default; }
+
+  .feedback { margin-top:20px; background:#fff; border-radius:14px; padding:16px 18px;
+    font-size:15px; color:#444; line-height:1.5; display:none; }
+  .feedback b { color:#F0645C; }
+  .feedback .ok { color:#1E9E6E; font-weight:800; }
+  .feedback .no { color:#F0645C; font-weight:800; }
+
+  /* 결과 화면 */
+  .result-emoji { font-size:64px; }
+  .result-score { font-weight:800; font-size:44px; color:#1e1e1e; margin-top:10px; }
+  .result-tier { font-weight:800; font-size:24px; color:#3FA79E; margin-top:8px; }
+  .result-msg { color:#555; font-size:17px; line-height:1.55; margin-top:14px; }
+  .cta-box { background:#fff; border-radius:16px; padding:20px; margin-top:26px;
+    font-size:16px; color:#444; line-height:1.6; }
+  .cta-box b { color:#1e1e1e; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">@somi_korean__</div>
+
+  <!-- 시작 -->
+  <div class="screen" id="start">
+    <div class="title">Korean Numbers<br>Native vs Sino Quiz 🎯</div>
+    <div class="subtitle">하나·둘·셋? or 일·이·삼?<br>20 questions. Tap the right reading!</div>
+    <div class="teams">
+      <div class="team-box t1"><div class="tn">하나·둘·셋</div><div class="tu"><b>Native</b> numbers<br>counting · hours<br>age · times</div></div>
+      <div class="team-box t2"><div class="tn">일·이·삼</div><div class="tu"><b>Sino</b> numbers<br>minutes · dates<br>money · ID numbers</div></div>
+    </div>
+    <button class="btn" onclick="startQuiz()">Start! 🚀</button>
+  </div>
+
+  <!-- 퀴즈 -->
+  <div class="hidden" id="quiz">
+    <div class="top">
+      <span class="round-tag" id="roundTag">Round 1 · Native or Sino?</span>
+      <span class="score-tag" id="scoreTag">0 pt</span>
+    </div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="q-situation" id="qSituation"></div>
+    <div class="q-main" id="qMain"></div>
+    <div class="q-sub" id="qSub"></div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn hidden" id="nextBtn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <!-- 결과 -->
+  <div class="screen hidden" id="result">
+    <div class="result-emoji" id="rEmoji"></div>
+    <div class="result-score" id="rScore"></div>
+    <div class="result-tier" id="rTier"></div>
+    <div class="result-msg" id="rMsg"></div>
+    <div class="cta-box">
+      📸 <b>Screenshot your score</b> and comment it on my post!<br>
+      🇰🇷 Follow <b>@somi_korean__</b> for real Korean beyond textbooks!
+    </div>
+    <a href="https://preply.com/ko/tutor/7904801" target="_blank" style="display:block; width:100%; background:#1e1e1e; border-radius:50px; font-weight:800; font-size:18px; color:#fff; padding:18px; margin-top:14px; text-decoration:none; text-align:center;">🎓 Master numbers in one lesson with me!</a>
+    <a href="https://www.instagram.com/somi_korean__/" target="_blank" style="display:block; width:100%; background:#fff; border:2px solid #8FD9D3; border-radius:50px; font-weight:800; font-size:17px; color:#1e1e1e; padding:16px; margin-top:10px; text-decoration:none; text-align:center;">📷 Follow @somi_korean__</a>
+    <button class="btn" onclick="location.reload()">Try Again 🔄</button>
+  </div>
+</div>
+
+<script>
+// R1: team pick (t: 1 or 2) / R2 & R3: reading choice (options + answer index)
+const QS = [
+  // Round 1 — Warm-up (direct reading choice)
+  {r:1, sit:"🍎 Buying apples", main:"사과 2개", sub:"2 apples", opts:["이 개","두 개"], a:1, why:"Counting things → Native → 두 개"},
+  {r:1, sit:"💰 Paying at a café", main:"5,000원", sub:"5,000 won", opts:["오천 원","다섯천 원"], a:0, why:"Money → Sino → 오천 원"},
+  {r:1, sit:"🎂 Talking about age", main:"20살", sub:"20 years old", opts:["이십 살","스무 살"], a:1, why:"Age with 살 → Native → 스무 살"},
+  {r:1, sit:"🚌 Taking the bus", main:"7번 버스", sub:"bus number 7", opts:["칠 번 버스","일곱 번 버스"], a:0, why:"A bus number is an ID (its name, not a count) → Sino → 칠 번"},
+  {r:1, sit:"📅 Making plans", main:"7월 15일", sub:"July 15", opts:["일곱 월 열다섯 일","칠월 십오 일"], a:1, why:"Dates → Sino → 칠월 십오 일"},
+  {r:1, sit:"⏰ Telling the hour", main:"2시", sub:"2 o'clock", opts:["두 시","이 시"], a:0, why:"Hours → Native → 두 시"},
+  {r:1, sit:"⏱ Telling the minutes", main:"30분", sub:"30 minutes", opts:["서른 분","삼십 분"], a:1, why:"Minutes → Sino → 삼십 분"},
+  {r:1, sit:"🧑‍🤝‍🧑 Counting people", main:"학생 3명", sub:"3 students", opts:["세 명","삼 명"], a:0, why:"Counting people → Native → 세 명"},
+  // Round 2 — Correct reading
+  {r:2, sit:"⏰ What time is it?", main:"3시", sub:"3 o'clock", opts:["세 시","삼 시"], a:0, why:"Hours use Native → 세 시"},
+  {r:2, sit:"⏱ How many minutes?", main:"30분", sub:"30 minutes", opts:["서른 분","삼십 분"], a:1, why:"Minutes use Sino → 삼십 분"},
+  {r:2, sit:"☕ Ordering coffee", main:"커피 2잔", sub:"2 cups of coffee", opts:["두 잔","이 잔"], a:0, why:"Counting cups → Native, and 둘 changes to 두!"},
+  {r:2, sit:"🎂 Casual age", main:"20살", sub:"20 years old", opts:["스물 살","스무 살"], a:1, why:"스물 changes shape → 스무 살 (shape-shifter!)"},
+  {r:2, sit:"🍜 Ordering food", main:"2인분", sub:"2 portions", opts:["두 인분","이 인분"], a:1, why:"Trap! 인분 always takes Sino → 이 인분"},
+  {r:2, sit:"🏢 Which floor?", main:"3층", sub:"3rd floor", opts:["세 층","삼 층"], a:1, why:"층 is a Sino counter (like 분·원·년) → always Sino → 삼 층"},
+  {r:2, sit:"🗓 How long?", main:"2달", sub:"2 months", opts:["두 달","이 달"], a:0, why:"달 takes Native → 두 달 (but 개월 takes Sino: 이 개월!)"},
+  {r:2, sit:"📅 Which month?", main:"6월", sub:"June", opts:["육월","유월"], a:1, why:"Sound-drop exception! 6월 → 유월, 10월 → 시월 (NOT 육월/십월). All other months are regular."},
+  // Round 3 — Real life
+  {r:3, sit:"⏰ Reading the clock", main:"1:05", sub:"what time is it?", opts:["한 시 오 분","일 시 오 분","한 시 다섯 분"], a:0, why:"Time MIXES both: hour = Native (한 시) + minute = Sino (오 분)"},
+  {r:3, sit:"💳 Paying the bill", main:"12,500원", sub:"12,500 won", opts:["만 이천오백 원","만 두천오백 원"], a:0, why:"Money is all Sino → 만 이천오백 원"},
+  {r:3, sit:"✈️ 'How many times have you been?'", main:"3번", sub:"3 times", opts:["세 번","삼 번"], a:0, why:"'Times' → Native (세 번). But bus No.3 = Sino (삼 번)!"},
+  {r:3, sit:"🚇 Taking the subway", main:"2호선", sub:"Line 2", opts:["이 호선","두 호선"], a:0, why:"A line number is an ID (its name, not a count) → Sino → 이 호선"},
+  {r:3, sit:"📄 Formal age on a document", main:"나이: 20세", sub:"age 20 (written)", opts:["이십 세","스무 세"], a:0, why:"세 is formal age → Sino → 이십 세 (casual: 스무 살)"}
+];
+
+let idx = 0, score = 0;
+const $ = id => document.getElementById(id);
+
+function startQuiz(){ $('start').classList.add('hidden'); $('quiz').classList.remove('hidden'); showQ(); }
+
+function showQ(){
+  const q = QS[idx];
+  $('roundTag').textContent = q.r===1 ? 'Round 1 · Warm-up' : q.r===2 ? 'Round 2 · Tricky ones' : 'Round 3 · Real life';
+  $('scoreTag').textContent = score + ' pt';
+  $('barFill').style.width = (idx/QS.length*100) + '%';
+  $('qSituation').textContent = q.sit;
+  $('qMain').textContent = q.main;
+  $('qSub').textContent = q.sub;
+  $('feedback').style.display = 'none';
+  $('nextBtn').classList.add('hidden');
+  const box = $('choices'); box.innerHTML = '';
+  box.className = 'choices';
+  q.opts.forEach((o,i) => box.appendChild(mkChoice(o, '', () => answer(i===q.a, q, i))));
+}
+
+function mkChoice(label, cls, fn){
+  const b = document.createElement('button');
+  b.className = 'choice ' + cls; b.innerHTML = label; b.onclick = fn;
+  return b;
+}
+
+function answer(ok, q, picked){
+  const btns = [...$('choices').children];
+  btns.forEach(b => b.disabled = true);
+  btns[q.a].classList.add('correct');
+  if(!ok && picked!==undefined) btns[picked].classList.add('wrong');
+  if(ok) score++;
+  $('scoreTag').textContent = score + ' pt';
+  const f = $('feedback');
+  f.innerHTML = (ok ? '<span class="ok">⭕ Correct!</span> ' : '<span class="no">❌ Not quite!</span> ') + q.why;
+  f.style.display = 'block';
+  $('nextBtn').classList.remove('hidden');
+}
+
+function nextQ(){
+  idx++;
+  if(idx < QS.length){ showQ(); } else { finish(); }
+}
+
+function finish(){
+  $('quiz').classList.add('hidden');
+  $('result').classList.remove('hidden');
+  $('rScore').textContent = score + ' / ' + QS.length;
+  let e,t,m;
+  if(score <= 9){ e='🐣'; t='Number Rookie';
+    m="The two teams are tricky — but now you've met them! Try again and watch your score jump."; }
+  else if(score <= 16){ e='👏'; t='Almost Native';
+    m="Really solid! You know the teams — just a few trap words (인분, 개월, 세) left to master."; }
+  else { e='💯'; t='Number Master';
+    m="Wow — even Koreans mix these up sometimes. Your number game is officially strong!"; }
+  $('rEmoji').textContent = e; $('rTier').textContent = t; $('rMsg').textContent = m;
+}
+</script>
+</body>
+</html>
