@@ -69,19 +69,15 @@
   .cta-box b { color:#1e1e1e; }
 
   /* 결과 화면 레슨 CTA */
-  .cta-lesson { display:block; width:100%; background:#F0645C; border-radius:50px;
-    font-weight:800; font-size:19px; color:#fff; padding:20px 18px; margin-top:16px;
-    text-decoration:none; text-align:center; line-height:1.25;
+  .cta-lesson, .cta-coffee, .cta-follow { display:block; width:100%; box-sizing:border-box;
+    border-radius:50px; font-weight:800; font-size:17px; padding:16px; margin-top:10px;
+    text-decoration:none; text-align:center; }
+  .cta-lesson { background:#F0645C; color:#fff; margin-top:16px;
     box-shadow:0 8px 22px rgba(240,100,92,.45); animation:ctaPulse 1.8s ease-in-out infinite; }
   .cta-lesson:active { transform:scale(.98); }
-  .cta-lesson .sub { display:block; font-weight:600; font-size:13px; opacity:.92; margin-top:4px; }
   @keyframes ctaPulse { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.035); } }
-  .cta-follow { display:block; width:100%; background:#fff; border:2px solid #8FD9D3;
-    border-radius:50px; font-weight:800; font-size:16px; color:#1e1e1e; padding:15px;
-    margin-top:10px; text-decoration:none; text-align:center; }
-  .cta-coffee { display:block; width:100%; box-sizing:border-box; background:#FFF3D6;
-    border:1.5px solid #EFD08A; border-radius:50px; font-weight:800; font-size:14px;
-    color:#8A5A12; padding:12px; margin-top:10px; text-decoration:none; text-align:center; }
+  .cta-coffee { background:#FFD84D; color:#6B4A12; border:1.5px solid #F0C020; }
+  .cta-follow { background:#fff; color:#1e1e1e; border:2px solid #8FD9D3; }
 
   .hidden { display:none !important; }
 </style>
@@ -126,9 +122,9 @@
       📸 <b>Screenshot your score</b> and comment it on my post!<br>
       🇰🇷 Follow <b>@somi_korean__</b> for real Korean beyond textbooks!
     </div>
-    <a href="https://preply.com/ko/tutor/7904801" target="_blank" class="cta-lesson">✨ Book a 1:1 lesson with me →<span class="sub">Master Korean numbers on Preply</span></a>
+    <a href="https://preply.com/ko/tutor/7904801" target="_blank" class="cta-lesson">🎓 Book a 1:1 lesson with me</a>
+    <a href="https://ko-fi.com/somi_korean" target="_blank" class="cta-coffee">☕ Buy me a coffee</a>
     <a href="https://www.instagram.com/somi_korean__/" target="_blank" class="cta-follow">📷 Follow @somi_korean__</a>
-    <a href="https://ko-fi.com/somi_korean" target="_blank" class="cta-coffee">☕ Enjoyed this? Buy me a coffee</a>
     <button class="btn" onclick="location.reload()">Try Again 🔄</button>
   </div>
 </div>
