@@ -67,6 +67,22 @@
   .cta-box { background:#fff; border-radius:16px; padding:20px; margin-top:26px;
     font-size:16px; color:#444; line-height:1.6; }
   .cta-box b { color:#1e1e1e; }
+
+  /* 결과 화면 레슨 CTA */
+  .cta-lesson { display:block; width:100%; background:#F0645C; border-radius:50px;
+    font-weight:800; font-size:19px; color:#fff; padding:20px 18px; margin-top:16px;
+    text-decoration:none; text-align:center; line-height:1.25;
+    box-shadow:0 8px 22px rgba(240,100,92,.45); animation:ctaPulse 1.8s ease-in-out infinite; }
+  .cta-lesson:active { transform:scale(.98); }
+  .cta-lesson .sub { display:block; font-weight:600; font-size:13px; opacity:.92; margin-top:4px; }
+  @keyframes ctaPulse { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.035); } }
+  .cta-follow { display:block; width:100%; background:#fff; border:2px solid #8FD9D3;
+    border-radius:50px; font-weight:800; font-size:16px; color:#1e1e1e; padding:15px;
+    margin-top:10px; text-decoration:none; text-align:center; }
+  .cta-coffee { display:block; width:100%; box-sizing:border-box; background:#FFF3D6;
+    border:1.5px solid #EFD08A; border-radius:50px; font-weight:800; font-size:14px;
+    color:#8A5A12; padding:12px; margin-top:10px; text-decoration:none; text-align:center; }
+
   .hidden { display:none !important; }
 </style>
 </head>
@@ -110,8 +126,9 @@
       📸 <b>Screenshot your score</b> and comment it on my post!<br>
       🇰🇷 Follow <b>@somi_korean__</b> for real Korean beyond textbooks!
     </div>
-    <a href="https://preply.com/ko/tutor/7904801" target="_blank" style="display:block; width:100%; background:#1e1e1e; border-radius:50px; font-weight:800; font-size:18px; color:#fff; padding:18px; margin-top:14px; text-decoration:none; text-align:center;">🎓 Master numbers in one lesson with me!</a>
-    <a href="https://www.instagram.com/somi_korean__/" target="_blank" style="display:block; width:100%; background:#fff; border:2px solid #8FD9D3; border-radius:50px; font-weight:800; font-size:17px; color:#1e1e1e; padding:16px; margin-top:10px; text-decoration:none; text-align:center;">📷 Follow @somi_korean__</a>
+    <a href="https://preply.com/ko/tutor/7904801" target="_blank" class="cta-lesson">✨ Book a 1:1 lesson with me →<span class="sub">Master Korean numbers on Preply</span></a>
+    <a href="https://www.instagram.com/somi_korean__/" target="_blank" class="cta-follow">📷 Follow @somi_korean__</a>
+    <a href="https://ko-fi.com/somi_korean" target="_blank" class="cta-coffee">☕ Enjoyed this? Buy me a coffee</a>
     <button class="btn" onclick="location.reload()">Try Again 🔄</button>
   </div>
 </div>
@@ -122,7 +139,7 @@ const QS = [
   // Round 1 — Warm-up (direct reading choice)
   {r:1, sit:"🍎 Buying apples", main:"사과 2개", sub:"2 apples", opts:["이 개","두 개"], a:1, why:"Counting things → Native → 두 개"},
   {r:1, sit:"💰 Paying at a café", main:"5,000원", sub:"5,000 won", opts:["오천 원","다섯천 원"], a:0, why:"Money → Sino → 오천 원"},
-  {r:1, sit:"🎂 Talking about age", main:"20살", sub:"20 years old", opts:["이십 살","스무 살"], a:1, why:"Age with 살 → Native → 스무 살"},
+  {r:1, sit:"📚 Counting books", main:"책 3권", sub:"3 books", opts:["세 권","삼 권"], a:0, why:"Counting books (권) → Native → 세 권"},
   {r:1, sit:"🚌 Taking the bus", main:"7번 버스", sub:"bus number 7", opts:["칠 번 버스","일곱 번 버스"], a:0, why:"A bus number is an ID (its name, not a count) → Sino → 칠 번"},
   {r:1, sit:"📅 Making plans", main:"7월 15일", sub:"July 15", opts:["일곱 월 열다섯 일","칠월 십오 일"], a:1, why:"Dates → Sino → 칠월 십오 일"},
   {r:1, sit:"⏰ Telling the hour", main:"2시", sub:"2 o'clock", opts:["두 시","이 시"], a:0, why:"Hours → Native → 두 시"},
@@ -138,18 +155,18 @@ const QS = [
   {r:2, sit:"🎂 Casual age", main:"20살", sub:"20 years old", opts:["스물 살","스무 살"], a:1, why:"스물 changes shape → 스무 살 (shape-shifter!)"},
   {r:2, sit:"🍜 Ordering food", main:"2인분", sub:"2 portions", opts:["두 인분","이 인분"], a:1, why:"Trap! 인분 always takes Sino → 이 인분"},
   {r:2, sit:"🏢 Which floor?", main:"3층", sub:"3rd floor", opts:["세 층","삼 층"], a:1, why:"층 is a Sino counter (like 분·원·년) → always Sino → 삼 층"},
-  {r:2, sit:"🗓 How long?", main:"2달", sub:"2 months", opts:["두 달","이 달"], a:0, why:"달 takes Native → 두 달 (but 개월 takes Sino: 이 개월!)"},
+  {r:2, sit:"🗓 How long?", main:"2달", sub:"2 months (counter 달)", opts:["두 달","이 달"], a:0, why:"달 takes Native → 두 달. Same meaning as 개월, but 달 = Native, 개월 = Sino!"},
   {r:2, sit:"📅 Which month?", main:"6월", sub:"June", opts:["육월","유월"], a:1, why:"Sound-drop exception! 6월 → 유월, 10월 → 시월 (NOT 육월/십월). All other months are regular."},
   {r:2, sit:"📱 Reading a phone number", main:"010", sub:"phone number", opts:["공일공","영일공"], a:0, why:"In phone numbers, 0 is read 공 (not 영/제로) → 공일공"},
   {r:2, sit:"🍺 Ordering drinks", main:"맥주 4병", sub:"4 bottles of beer", opts:["네 병","사 병"], a:0, why:"Counting bottles → Native, and 넷 → 네! → 네 병"},
-  {r:2, sit:"🗓 How many months?", main:"6개월", sub:"6 months", opts:["여섯 개월","육 개월"], a:1, why:"Trap! 개월 takes Sino → 육 개월 (but 달 takes Native: 여섯 달!)"},
+  {r:2, sit:"🗓 How many months?", main:"6개월", sub:"6 months (counter 개월)", opts:["여섯 개월","육 개월"], a:1, why:"Trap! 개월 = Sino → 육 개월. Same meaning as 달, but 달 = Native (여섯 달), 개월 = Sino (육 개월)!"},
   // Round 3 — Real life
   {r:3, sit:"⏰ Reading the clock", main:"1:05", sub:"what time is it?", opts:["한 시 오 분","일 시 오 분","한 시 다섯 분"], a:0, why:"Time MIXES both: hour = Native (한 시) + minute = Sino (오 분)"},
   {r:3, sit:"💳 Paying the bill", main:"12,500원", sub:"12,500 won", opts:["만 이천오백 원","만 두천오백 원"], a:0, why:"Money is all Sino → 만 이천오백 원"},
   {r:3, sit:"✈️ 'How many times have you been?'", main:"3번", sub:"3 times", opts:["세 번","삼 번"], a:0, why:"'Times' → Native (세 번). But bus No.3 = Sino (삼 번)!"},
   {r:3, sit:"🚇 Taking the subway", main:"2호선", sub:"Line 2", opts:["이 호선","두 호선"], a:0, why:"A line number is an ID (its name, not a count) → Sino → 이 호선"},
   {r:3, sit:"📄 Formal age on a document", main:"나이: 20세", sub:"age 20 (written)", opts:["이십 세","스무 세"], a:0, why:"세 is formal age → Sino → 이십 세 (casual: 스무 살)"},
-  {r:3, sit:"💵 Checking the price", main:"30,000원", sub:"30,000 won", opts:["삼만 원","서른천 원"], a:0, why:"Money → Sino → 삼만 원 (30,000 is 삼만, not 서른천!)"},
+  {r:3, sit:"💵 Checking the price", main:"30,000원", sub:"30,000 won", opts:["삼만 원","삼만천 원"], a:0, why:"30,000 = 삼만 원. Watch the place value — 삼만천 원 is 31,000 (one 천 too many)!"},
   {r:3, sit:"🎂 How old is your dad?", main:"40살", sub:"40 years old", opts:["사십 살","마흔 살"], a:1, why:"Age with 살 → Native → 마흔 살"},
   {r:3, sit:"🚪 Which room?", main:"5번 방", sub:"room 5", opts:["오 번 방","다섯 번 방"], a:0, why:"A room number is an ID → Sino → 오 번 방"}
 ];
